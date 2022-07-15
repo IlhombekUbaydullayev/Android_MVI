@@ -1,0 +1,53 @@
+package com.example.newpatterns.adapter
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.newpatterns.R
+import com.example.newpatterns.activity.main.CreateActivity
+import com.example.newpatterns.activity.main.MainActivity
+import com.example.newpatterns.model.Post
+import com.example.newpatterns.utils.Utils
+
+
+class CreateAdapter(var activity: CreateActivity, var items: ArrayList<Post>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_create_list, parent, false)
+        return PosterViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val post: Post = items[position]
+        if (holder is PosterViewHolder) {
+            val tv_title = holder.tv_title
+            val tv_body = holder.tv_body
+
+            tv_title.setText(post.tittle!!.toUpperCase())
+            tv_body.setText(post.body)
+
+        }
+    }
+
+    inner class PosterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var tv_title: TextView
+        var tv_body: TextView
+        var ll_poster: LinearLayout
+
+        init {
+            ll_poster = view.findViewById(R.id.ll_poster)
+            tv_title = view.findViewById(R.id.tv_title)
+            tv_body = view.findViewById(R.id.tv_body)
+        }
+    }
+
+}
